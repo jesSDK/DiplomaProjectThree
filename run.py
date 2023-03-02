@@ -29,11 +29,13 @@ def validate_sales(values):
     Ensures data is validated before use by checking there are exactly 6 integers provided to us 
     """
     try:
+        [int(value) for value in values]
         if len(values) != 6:
             raise ValueError(
                 f"Expected 6 values, got {len(values)}"
             )
     except ValueError as e:
         print (f"Erorr: {e}")
+
 
 get_sales_data()
