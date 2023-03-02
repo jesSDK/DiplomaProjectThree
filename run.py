@@ -19,7 +19,7 @@ def get_sales_data():
     while True:
         print("Please enter the latest sales figures")
         print("Each value should be seperated by a comma as show below")
-        print("22,33,44,55")
+        print("11,22,33,44,55,66")
         data_str = input("Please enter sales figures: ")
 
         sales_data = data_str.split(',')
@@ -55,6 +55,34 @@ def update_sales_sheet(data):
     sales_worksheet.append_row(data)
     print("Sales data updated!\n")
 
-data = get_sales_data()
-sales_data = [int(num) for num in data] #Convert data to integers
-update_sales_sheet(sales_data)
+def calculate_surplus(sales_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
+    - Positive surplus indicates stock not sold
+    - Negative surplus indicates extra ordered when stock was sold out.
+    """
+    print("Calculating surplus data...\n")
+    stock = SHEET.worksheet("stock").get_all_values() #Get stock values from worksheet
+    stock_row = stock[-1] #gives us the last stock entry
+
+    surplus_data = []
+    for stock, sales in zip(stock_row, sales_row):
+        surplus = int(stock) - sales
+        surplus_data.append(surplus)
+    
+    return surplus_data
+
+
+def main():
+    """
+    Run program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data] #Convert data to integers
+    update_sales_sheet(sales_data)
+    new_surplus_data = calculate_surplus(sales_data)
+    print(new_surplus_data)
+    
+
+
+main()
