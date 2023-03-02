@@ -26,6 +26,7 @@ def get_sales_data():
 
         if validate_sales(sales_data):
             break
+    return sales_data
 
         
 
@@ -45,4 +46,15 @@ def validate_sales(values):
     
     return True
 
-get_sales_data()
+def update_sales_sheet(data):
+    """
+    Updates the sales figures on the worksheet
+    """
+    print("Updating sales worksheet...\n")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+    print("Sales data updated!\n")
+
+data = get_sales_data()
+sales_data = [int(num) for num in data] #Convert data to integers
+update_sales_sheet(sales_data)
