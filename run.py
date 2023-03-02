@@ -16,13 +16,18 @@ def get_sales_data():
     """
     Gets the sales figures inputted by the user
     """
-    print("Please enter the latest sales figures")
-    print("Each value should be seperated by a comma as show below")
-    print("22,33,44,55")
-    data_str = input("Please enter sales figures: ")
+    while True:
+        print("Please enter the latest sales figures")
+        print("Each value should be seperated by a comma as show below")
+        print("22,33,44,55")
+        data_str = input("Please enter sales figures: ")
 
-    sales_data = data_str.split(',')
-    validate_sales(sales_data)
+        sales_data = data_str.split(',')
+
+        if validate_sales(sales_data):
+            break
+
+        
 
 def validate_sales(values):
     """
@@ -36,6 +41,8 @@ def validate_sales(values):
             )
     except ValueError as e:
         print (f"Erorr: {e}")
-
+        return False
+    
+    return True
 
 get_sales_data()
