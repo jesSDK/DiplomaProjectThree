@@ -20,7 +20,7 @@ def get_sales_data():
         print("Please enter the latest sales figures")
         print("Each value should be seperated by a comma as show below")
         print("11,22,33,44,55,66")
-        data_str = input("Please enter sales figures: ")
+        data_str = input("Please enter sales figures: \n")
 
         sales_data = data_str.split(',')
 
@@ -55,7 +55,7 @@ def calculate_surplus(sales_row):
     stock_row = stock[-1] #gives us the last stock entry
 
     surplus_data = []
-    for stock, sales in zip(stock_row, sales_row):
+    for stock, sales in zip(stock_row, sales_row): #Zip allows us to iterate through two lists at once
         surplus = int(stock) - sales
         surplus_data.append(surplus)
     return surplus_data
@@ -92,7 +92,7 @@ def calculate_stock(data):
     for column in data:
         int_column = [int(num) for num in column]
         average = sum(int_column) / len(int_column)
-        recommended_stock = average * 1.1
+        recommended_stock = average * 1.1 #
         stock_data.append(round(recommended_stock))
     return stock_data
 
