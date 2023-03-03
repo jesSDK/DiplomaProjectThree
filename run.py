@@ -28,8 +28,6 @@ def get_sales_data():
             break
     return sales_data
 
-        
-
 def validate_sales(values):
     """
     Ensures data is validated before use by checking there are exactly 6 integers provided to us 
@@ -46,15 +44,6 @@ def validate_sales(values):
     
     return True
 
-def update_sales_sheet(data):
-    """
-    Updates the sales figures on the worksheet
-    """
-    print("Updating sales worksheet...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales data updated!\n")
-
 def calculate_surplus(sales_row):
     """
     Compare sales with stock and calculate the surplus for each item type.
@@ -69,18 +58,17 @@ def calculate_surplus(sales_row):
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
-    
     return surplus_data
 
-
-def update_surplus_sheet(data):
+def update_worksheet(data,worksheet):
     """
-    Updates the surplus data on the worksheet
+    Updates the specified worksheet with new data
     """
-    print("Updating surplus worksheet...\n")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    surplus_worksheet.append_row(data)
-    print("Surplus data updated!")
+    print(f"Updating {worksheet} worksheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} data updated!")
+    
 
 def main():
     """
@@ -88,10 +76,8 @@ def main():
     """
     data = get_sales_data()
     sales_data = [int(num) for num in data] #Convert data to integers
-    update_sales_sheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus(sales_data)
-    update_surplus_sheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
     
-
-
 main()
