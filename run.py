@@ -73,6 +73,15 @@ def calculate_surplus(sales_row):
     return surplus_data
 
 
+def update_surplus_sheet(data):
+    """
+    Updates the surplus data on the worksheet
+    """
+    print("Updating surplus worksheet...\n")
+    surplus_worksheet = SHEET.worksheet("surplus")
+    surplus_worksheet.append_row(data)
+    print("Surplus data updated!")
+
 def main():
     """
     Run program functions
@@ -81,7 +90,7 @@ def main():
     sales_data = [int(num) for num in data] #Convert data to integers
     update_sales_sheet(sales_data)
     new_surplus_data = calculate_surplus(sales_data)
-    print(new_surplus_data)
+    update_surplus_sheet(new_surplus_data)
     
 
 
