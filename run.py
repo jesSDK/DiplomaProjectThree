@@ -69,6 +69,32 @@ def update_worksheet(data,worksheet):
     worksheet_to_update.append_row(data)
     print(f"{worksheet} data updated!")
     
+def last_5_sales():
+    """
+    Gets the last 5 entries for each item available for sale
+    """
+    sales = SHEET.worksheet("sales")
+    
+    columns = []
+    for ind in range(1,7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
+    
+    return columns
+
+def calculate_stock(data):
+    """
+    Calcuates the average stock for each item and make a recomendationg
+    """
+    print("Calculating stock data...\n")
+    stock_data = []
+
+    for column in data:
+        int_column = [int(num) for num in column]
+        average = sum(int_column) / len(int_column)
+        recommended_stock = average * 1.1
+        stock_data.append(round(recommended_stock))
+    return stock_data
 
 def main():
     """
@@ -79,5 +105,8 @@ def main():
     update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus(sales_data)
     update_worksheet(new_surplus_data, "surplus")
+    sales_columns = last_5_sales()
+    stock_data = calculate_stock(sales_columns)
+    update_worksheet(stock_data, "stock")
     
 main()
